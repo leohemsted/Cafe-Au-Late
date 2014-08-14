@@ -1,28 +1,94 @@
 package com.aam.latecoffee;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
+                                                   //input   ????  output
+    private class SendLocationTask extends AsyncTask<String, Void, HttpResponse> {
+
+        private Exception exception;
+
+        @Override
+        protected HttpResponse doInBackground(String... in) {
+            try {
+                HttpPost httpPost = new HttpPost(in[0]);
+                httpPost.setEntity(new StringEntity(in[1]));
+                httpPost.setHeader("Accept", "application/json");
+                httpPost.setHeader("Content-type", "application/json");
+                return new DefaultHttpClient().execute(httpPost);
+
+            } catch (Exception e) {
+                this.exception = e;
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(HttpResponse response) {
+            if (response != null) {
+                textView.setText(response.getStatusLine().getReasonPhrase());
+            } else {
+                textView.setText(exception.getMessage());
+            }
+        }
+    }
+
+
+    private TextView textView = null;
+
+    public String getLocation() {
+        return null;
+    }
+
+    public void sendLocation() {
+        String json = "{\"name\":\"Leo\", \"geolocation\":\"" + getLocation() + "\", \"timestamp\":"+ (System.currentTimeMillis()/1000) + "}";
+        String url = "http://178.62.12.246/coffee_preference";
+        new SendLocationTask().execute(new String[]{url, json});
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.welcome_screen);
 
-
-        //save some defaults for testing
-        SharedPreferences.Editor edit = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit();
-        edit.putString(getString(R.string.saved_ip), getString(R.string.default_ip));
+        // save some defaults for testing
+        SharedPreferences.Editor edit = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                .edit();
+        edit.putString(getString(R.string.saved_ip),
+                getString(R.string.default_ip));
         edit.putInt(getString(R.string.saved_port), 80);
         edit.commit();
-    }
 
+        textView = (TextView) findViewById(R.id.detailsText);
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // fetch data
+            sendLocation();
+        } else {
+            // display error
+            textView.setText("" + networkInfo.getState() + ": "
+                    + networkInfo.getReason());
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

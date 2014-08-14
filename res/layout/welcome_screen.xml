@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="com.aam.latecoffee.MainActivity"
     android:background="#fffff1db">
 
     <TextView
@@ -11,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Welcome to Cafe-Au-Late"
-        android:id="@+id/textView"
+        android:id="@+id/detailsText"
         android:layout_gravity="center_horizontal|top"
         android:background="#fffff1db"
         android:layout_alignParentTop="true"
@@ -64,5 +66,14 @@
         android:textColor="#ff987b5c"
         android:textAlignment="center"
         android:text="0" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignRight="@+id/textView"
+        android:layout_below="@+id/digitalClock"/>
 
 </RelativeLayout>
