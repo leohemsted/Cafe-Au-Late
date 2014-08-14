@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.aam.latecoffee.MainActivity" >
+    tools:context="com.aam.latecoffee.MainActivity"
+    android:background="#fffff1db">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +16,9 @@
         android:text="Profile"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:shadowColor="#ff606161"
+        android:textColor="#ff987b5c" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +29,8 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:textColor="#ff987b5c" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,7 +41,8 @@
         android:layout_above="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="46dp" />
+        android:layout_marginBottom="46dp"
+        android:textColor="#ff987b5c" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,7 +53,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/editText2" />
+        android:layout_toLeftOf="@+id/editText2"
+        android:textColor="#ff987b5c" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -59,7 +65,8 @@
         android:id="@+id/editText"
         android:layout_alignTop="@+id/textView2"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ff987b5c" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -69,7 +76,8 @@
         android:layout_alignBottom="@+id/textView4"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/textView4" />
+        android:layout_toRightOf="@+id/textView4"
+        android:textColor="#ff987b5c" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -80,6 +88,27 @@
         android:layout_alignStart="@+id/editText"
         android:text="Team Name"
         android:layout_alignRight="@+id/editText"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_alignEnd="@+id/editText"
+        android:textColor="#ff987b5c" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Okay"
+        android:id="@+id/button"
+        android:textColor="#ff987b5c"
+        android:layout_alignTop="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/button2"
+        android:textColor="#ff987b5c"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/editText3"
+        android:layout_alignEnd="@+id/editText3" />
 
 </RelativeLayout>
