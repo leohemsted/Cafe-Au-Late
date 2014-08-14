@@ -17,9 +17,8 @@ public class MainActivity extends Activity {
 
 
         //save some defaults for testing
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putString(getString(R.string.saved_ip), "178.62.12.246");
+        SharedPreferences.Editor edit = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit();
+        edit.putString(getString(R.string.saved_ip), getString(R.string.default_ip));
         edit.putInt(getString(R.string.saved_port), 80);
         edit.commit();
     }
