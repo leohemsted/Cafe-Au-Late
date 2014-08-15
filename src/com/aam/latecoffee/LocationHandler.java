@@ -15,6 +15,7 @@ public class LocationHandler extends Fragment {
     String lastLoc = null;
     long lastTimestamp = 0;
     Context context = null;
+
     public LocationHandler(Context context){
         this.context = context;
     }
