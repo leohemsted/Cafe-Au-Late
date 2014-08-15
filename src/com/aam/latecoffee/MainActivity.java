@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.aam.latecoffee.LocationHandler;
 
+import java.lang.Override;
+
 
 public class MainActivity extends Activity {
                                                    //input   ????  output
@@ -81,6 +83,28 @@ public class MainActivity extends Activity {
         textView = (TextView) findViewById(R.id.detailsText);
         locHandlr = new LocationHandler(this);
 
+        processLocation();
+
+        timerHandler.postDelayed(timerRunnable, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timerHandler.removeCallbacks(timerRunnable);
+    }
+
+    //runs without a timer by reposting this handler at the end of the runnable
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            processLocation();
+            timerHandler.postDelayed(this, 500);
+        }
+    };
+
+    public processLocation() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {

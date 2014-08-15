@@ -26,6 +26,12 @@ public class LocationHandler extends Fragment {
 
         /* Use the LocationManager class to obtain GPS locations */
         LocationManager mlocManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        // inital set
+        Location loc = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        lastLoc = loc.getLatitude() + "," + loc.getLongitude();
+        lastTimestamp = loc.getTime();
+
         LocationListener mlocListener = new MyLocationListener();
         mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
     }
