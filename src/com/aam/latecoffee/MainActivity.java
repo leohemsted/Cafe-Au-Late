@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.aam.latecoffee.LocationHandler;
+
 
 public class MainActivity extends Activity {
                                                    //input   ????  output
@@ -49,11 +51,12 @@ public class MainActivity extends Activity {
         }
     }
 
-
     private TextView textView = null;
+    private LocationHandler locHandlr = null;
+    private long lastTime = 0;
 
     public String getLocation() {
-        return null;
+        return locHandlr.getLastLoc();
     }
 
     public void sendLocation() {
@@ -71,22 +74,28 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor edit = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                 .edit();
-        edit.putString(getString(R.string.saved_ip),
-                getString(R.string.default_ip));
+        edit.putString(getString(R.string.saved_ip), getString(R.string.default_ip));
         edit.putInt(getString(R.string.saved_port), 80);
         edit.commit();
 
         textView = (TextView) findViewById(R.id.detailsText);
+        locHandlr = new LocationHandler(this);
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            // fetch data
-            sendLocation();
+
+            if (lastTime < locHandlr.getLastTimestamp()) {
+                lastTime = locHandlr.getLastTimestamp();
+                sendLocation();
+                Time now = new Time();
+                now.setToNow();
+                textView.setText("Sent data to server at " + now.format("%r"));
+            }
+
         } else {
             // display error
-            textView.setText("" + networkInfo.getState() + ": "
-                    + networkInfo.getReason());
+            textView.setText("" + networkInfo.getState() + ": "+ networkInfo.getReason());
         }
     }
 
