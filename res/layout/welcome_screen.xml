@@ -76,4 +76,6 @@
         android:layout_alignRight="@+id/textView"
         android:layout_below="@+id/digitalClock"/>
 
+    
+    
 </RelativeLayout>

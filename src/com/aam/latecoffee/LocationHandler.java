@@ -6,6 +6,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by Leo on 15/08/2014.
@@ -18,12 +19,6 @@ public class LocationHandler extends Fragment {
 
     public LocationHandler(Context context){
         this.context = context;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         /* Use the LocationManager class to obtain GPS locations */
         LocationManager mlocManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -32,8 +27,17 @@ public class LocationHandler extends Fragment {
         lastLoc = loc.getLatitude() + "," + loc.getLongitude();
         lastTimestamp = loc.getTime();
 
+        Log.v("late", "LOCATION = " + lastLoc);
+
         LocationListener mlocListener = new MyLocationListener();
         mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.v("late", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+        super.onCreate(savedInstanceState);
     }
 
     public long getLastTimestamp() {
@@ -56,6 +60,7 @@ public class LocationHandler extends Fragment {
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
+            Log.v("late", "LOCATION CHANGED!");
             lastLoc = loc.getLatitude() + "," + loc.getLongitude();
             lastTimestamp = loc.getTime();
         }

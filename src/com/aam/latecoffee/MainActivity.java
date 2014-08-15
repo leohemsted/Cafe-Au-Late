@@ -12,13 +12,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
-import com.aam.latecoffee.LocationHandler;
-
-import java.lang.Override;
 
 
 public class MainActivity extends Activity {
@@ -100,16 +99,17 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             processLocation();
-            timerHandler.postDelayed(this, 500);
+            timerHandler.postDelayed(this, 5000);
         }
     };
 
-    public processLocation() {
+    public void processLocation() {
+        Log.v("late", "process location");
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-
             if (lastTime < locHandlr.getLastTimestamp()) {
+                Log.v("late", "sending Location!");
                 lastTime = locHandlr.getLastTimestamp();
                 sendLocation();
                 Time now = new Time();
